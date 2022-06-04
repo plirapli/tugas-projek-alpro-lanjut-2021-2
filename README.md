@@ -23,7 +23,7 @@ Main Menu
 		 - Nama [DONE]
 		 - Gol. Darah [DONE]	
 		 - Status [DONE]
-	- Selection Sort
+	 - Selection Sort
 		 - NIK [DONE]
 		 - Nama [DONE]
 		 - Gol. Darah [DONE]	

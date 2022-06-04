@@ -15,7 +15,7 @@
 		 - Nama [DONE]
 		 - Gol. Darah [DONE]	
 		 - Status [DONE]
- 4. Sort Data
+4. Sort Data
 	 - Bubble Sort
 		 - NIK [DONE]
 		 - Nama [DONE]
@@ -41,7 +41,7 @@
 		 - Nama [NOT YET]
 		 - Gol. Darah [NOT YET]	
 		 - Status [NOT YET]
- 5. Transaksi
+5. Transaksi
 	 - Merging Sambung [NOT YET]
 	 - Merging Urut [NOT YET]
 	 - Updating [DONE]

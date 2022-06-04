@@ -2,8 +2,6 @@
 
 ### Fitur:
 
-Main Menu
-
  1. Input Data [DONE]
  2. Output Data [DONE]
  3. Search Data

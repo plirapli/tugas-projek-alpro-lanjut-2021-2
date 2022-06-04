@@ -46,6 +46,7 @@ string replaceHyphen(string str);
 // Misc
 string statusCode(int kode);
 void statusCode();
+void showFileName();
 void pressAnyKey();
 
 string fileName = "data-penduduk";
@@ -94,7 +95,7 @@ int main()
 
       case '2':
         system(CLEAR);
-        cout << "FILE: " + fileName + ".txt \n\n";
+        showFileName();
         cetakPenduduk(penduduk, jmlPenduduk);
         pressAnyKey();
         break;
@@ -116,7 +117,7 @@ int main()
 
       case '6':
         repeatMainMenu = 0;
-        cout << "File saat ini: " << fileName << ".txt \n\n";
+        showFileName();
         break;
 
       default:
@@ -170,7 +171,7 @@ void writeFile(Penduduk penduduk[], int jml, string namaFile)
     for (i = 0; i < jml; i++)
     {
       // Contoh format file:
-      // 123210078 Muhammad_Rafli a belum_kawin
+      // 123210078 Muhammad_Rafli A 1
 
       myFile << penduduk[i].noKtp << " "
              << penduduk[i].nama << " "
@@ -185,8 +186,8 @@ void writeFile(Penduduk penduduk[], int jml, string namaFile)
 
 void addPenduduk(Penduduk penduduk[], int jml)
 {
-  cout << "FILE: " + fileName + ".txt \n\n"
-       << "[TAMBAH PENDUDUK] \n";
+  showFileName();
+  cout << "[TAMBAH PENDUDUK] \n";
   cout << "Nomor KTP: ";
   cin >> penduduk[jml].noKtp;
 
@@ -236,8 +237,8 @@ void searchPenduduk(Penduduk penduduk[], int jml)
 
   do
   {
-    cout << "FILE: " + fileName + ".txt \n\n"
-         << "[PENCARIAN DATA PENDUDUK] \n"
+    showFileName();
+    cout << "[PENCARIAN DATA PENDUDUK] \n"
          << "[1] NIK \n"
          << "[2] Nama \n"
          << "[3] Gol. Darah \n"
@@ -282,7 +283,7 @@ void searchPenduduk(Penduduk penduduk[], int jml)
       int inputInt, searchIndex;
       string inputStr;
 
-      cout << "[PENGURUTAN DATA PENDUDUK] \n"
+      cout << "[Pencarian Penduduk Berdasarkan " + strSearchBy + "] \n"
            << "[1] Sequential Search \n"
            << "[2] Binary Search \n"
            << "[...] Kembali \n"
@@ -378,8 +379,8 @@ void sortPenduduk(Penduduk penduduk[], int jml)
 
   do
   {
-    cout << "FILE: " + fileName + ".txt \n\n"
-         << "[PENGURUTAN DATA PENDUDUK] \n"
+    showFileName();
+    cout << "[PENGURUTAN DATA PENDUDUK] \n"
          << "[1] NIK \n"
          << "[2] Nama \n"
          << "[3] Gol. Darah \n"
@@ -423,7 +424,7 @@ void sortPenduduk(Penduduk penduduk[], int jml)
 
       do
       {
-        cout << "[PENGURUTAN DATA PENDUDUK] \n"
+        cout << "[Pengurutan Data Penduduk Berdasarkan " + strSortedBy + "] \n"
              << "[1] Bubble Sort \n"
              << "[2] Selection Sort \n"
              << "[3] Insertion Sort \n"
@@ -487,8 +488,8 @@ void transaksiPenduduk(Penduduk penduduk[], int jml)
 
   do
   {
-    cout << "FILE: " + fileName + ".txt \n\n"
-         << "[TRANSAKSI PENDUDUK] \n"
+    showFileName();
+    cout << "[TRANSAKSI PENDUDUK] \n"
          << "[1] Updating \n"
          << "[2] Splitting \n"
          << "[...] Kembali \n"
@@ -939,6 +940,7 @@ void updatePenduduk(Penduduk penduduk[], int index, int jml)
 
   do
   {
+    showFileName();
     cetakPenduduk(penduduk, index + 1, index);
 
     cout << "[UPDATING DATA PENDUDUK] \n"
@@ -1027,8 +1029,8 @@ void splitPenduduk(Penduduk penduduk[], int jml)
     }
   }
 
-  cout << "[SPLITTING] \n"
-       << "FILE: " + fileName + ".txt \n\n";
+  cout << "[SPLITTING] \n";
+  showFileName();
   cetakPenduduk(penduduk, jml);
 
   cout << "Masukkan Nama File ke-1 (.txt) > ";
@@ -1087,6 +1089,11 @@ void statusCode()
        << "[3]: Cerai Hidup \n"
        << "[4]: Cerai Mati \n"
        << "[...] Lain-lain \n";
+}
+
+void showFileName()
+{
+  cout << "FILE: " + fileName + ".txt \n\n";
 }
 
 void pressAnyKey()

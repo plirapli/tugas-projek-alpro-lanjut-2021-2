@@ -12,27 +12,33 @@ struct Penduduk
   string nama, golDar;
 };
 
+// R/W Files
 void readFile(Penduduk penduduk[], int &jml);
 void writeFile(Penduduk penduduk[], int jml);
 
+// Main Menu
 void addPenduduk(Penduduk penduduk[], int jml);
 void cetakPenduduk(Penduduk penduduk[], int jml, int awal = 0);
 void searchPenduduk(Penduduk penduduk[], int jml);
 void sortPenduduk(Penduduk penduduk[], int jml);
 
+// Search Method
 int seqSearch(Penduduk penduduk[], int jml, int input, int searchCode);
 int seqSearch(Penduduk penduduk[], int jml, string input, int searchCode);
 int binarySearch(Penduduk penduduk[], int awal, int akhir, int input, int searchCode);
 int binarySearch(Penduduk penduduk[], int awal, int akhir, string input, int searchCode);
 
+// Sort Method
 void bubbleSort(Penduduk penduduk[], int jml, int sortCode);
 void selectionSort(Penduduk penduduk[], int jml, int sortCode);
 void insertionSort(Penduduk penduduk[], int jml, int sortCode);
 void shellSort(Penduduk penduduk[], int jml, int sortedCode);
 
+// Sting Manipulation
 string replaceSpasi(string str);
 string replaceHyphen(string str);
 
+// Misc
 string statusCode(int kode);
 void statusCode();
 void pressAnyKey();
@@ -324,7 +330,7 @@ void sortPenduduk(Penduduk penduduk[], int jml)
 {
   Penduduk sortedPenduduk[100];
   int sortedCode;
-  bool isRepeatMenu = 0;
+  bool isRepeatMenu = 1;
   char inputMenu, inputSort;
   string strSortedBy, sortMethod;
 
@@ -374,7 +380,7 @@ void sortPenduduk(Penduduk penduduk[], int jml)
     {
     case '1' ... '4':
     {
-      bool isRepeatSort = 0;
+      bool isRepeatSort = 1;
 
       do
       {
@@ -415,7 +421,7 @@ void sortPenduduk(Penduduk penduduk[], int jml)
           break;
         }
 
-        if (!isRepeatSort)
+        if (isRepeatSort)
         {
           cout << "[Pengurutan Data Penduduk Berdasarkan " + strSortedBy + "] \n"
                << "Metode: " << sortMethod << "\n\n";
@@ -423,16 +429,16 @@ void sortPenduduk(Penduduk penduduk[], int jml)
           cetakPenduduk(sortedPenduduk, jml);
           pressAnyKey();
         }
-      } while (!isRepeatSort);
+      } while (isRepeatSort);
     }
     break;
 
     default:
-      isRepeatMenu = 1;
+      isRepeatMenu = 0;
       break;
     }
 
-  } while (!isRepeatMenu);
+  } while (isRepeatMenu);
 }
 
 int seqSearch(Penduduk penduduk[], int jml, int input, int searchCode)

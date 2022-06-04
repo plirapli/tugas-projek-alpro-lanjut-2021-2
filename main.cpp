@@ -9,8 +9,7 @@ using namespace std;
 struct Penduduk
 {
   int noKtp, status;
-  char golDar;
-  string nama;
+  string nama, golDar;
 };
 
 void readFile(Penduduk penduduk[], int &jml);
@@ -18,7 +17,13 @@ void writeFile(Penduduk penduduk[], int jml);
 
 void addPenduduk(Penduduk penduduk[], int jml);
 void cetakPenduduk(Penduduk penduduk[], int jml, int awal = 0);
-void sortingPenduduk(Penduduk penduduk[], int jml);
+void searchPenduduk(Penduduk penduduk[], int jml);
+void sortPenduduk(Penduduk penduduk[], int jml);
+
+int seqSearch(Penduduk penduduk[], int jml, int input, int searchCode);
+int seqSearch(Penduduk penduduk[], int jml, string input, int searchCode);
+int binarySearch(Penduduk penduduk[], int awal, int akhir, int input, int searchCode);
+int binarySearch(Penduduk penduduk[], int awal, int akhir, string input, int searchCode);
 
 void bubbleSort(Penduduk penduduk[], int jml, int sortCode);
 void selectionSort(Penduduk penduduk[], int jml, int sortCode);
@@ -66,8 +71,12 @@ int main()
       pressAnyKey();
       break;
 
+    case '3':
+      searchPenduduk(penduduk, jmlPenduduk);
+      break;
+
     case '4':
-      sortingPenduduk(penduduk, jmlPenduduk);
+      sortPenduduk(penduduk, jmlPenduduk);
       break;
 
     default:
@@ -176,7 +185,142 @@ void cetakPenduduk(Penduduk penduduk[], int jml, int awal)
     cout << "Penduduk masih kosong! \n\n";
 }
 
-void sortingPenduduk(Penduduk penduduk[], int jml)
+void searchPenduduk(Penduduk penduduk[], int jml)
+{
+  int searchCode;
+  bool isRepeatMenu = 1;
+  char inputMenu, inputMethod;
+  string strSearchBy, strSearchMethod;
+
+  do
+  {
+    cout << "[PENCARIAN DATA PENDUDUK] \n"
+         << "[1] No. KTP \n"
+         << "[2] Nama \n"
+         << "[3] Gol. Darah \n"
+         << "[4] Status \n"
+         << "[...] Kembali \n"
+         << "Pilih > ";
+    cin >> inputMenu;
+    system(CLEAR);
+
+    switch (inputMenu)
+    {
+    case '1':
+      searchCode = 1;
+      strSearchBy = "No. KTP";
+      break;
+
+    case '2':
+      searchCode = 2;
+      strSearchBy = "Nama";
+      break;
+
+    case '3':
+      searchCode = 3;
+      strSearchBy = "Gol. Darah";
+      break;
+
+    case '4':
+      searchCode = 4;
+      strSearchBy = "Status";
+      break;
+
+    default:
+      isRepeatMenu = 0;
+      break;
+    }
+
+    switch (inputMenu)
+    {
+    case '1' ... '4':
+    {
+      bool isRepeatSort = 1;
+      int inputInt, searchIndex;
+      string inputStr;
+
+      cout << "[PENGURUTAN DATA PENDUDUK] \n"
+           << "[1] Sequential Search \n"
+           << "[2] Binary Search \n"
+           << "[...] Kembali \n"
+           << "Pilih > ";
+      cin >> inputMethod;
+      system(CLEAR);
+
+      if (isRepeatMenu)
+      {
+        if (inputMenu == '4')
+          statusCode();
+        cout << "\n";
+
+        cout << "Masukkan kata kunci: ";
+        if (inputMenu == '1' || inputMenu == '4')
+          cin >> inputInt;
+        else
+        {
+          cin.ignore();
+          getline(cin, inputStr);
+        }
+        cout << "\n";
+      }
+
+      switch (inputMethod)
+      {
+      case '1': // Seq. Search
+      {
+        strSearchMethod = "Sequential Search";
+
+        // Mengecek tipe data dari input
+        searchIndex = (inputMenu == '1' || inputMenu == '4')
+                          ? seqSearch(penduduk, jml, inputInt, searchCode)
+                          : seqSearch(penduduk, jml, inputStr, searchCode);
+        break;
+      }
+
+      case '2': // Binary Search
+      {
+        strSearchMethod = "Binary Search";
+
+        // Mengurutkan data terlebih dahulu
+        shellSort(penduduk, jml, searchCode);
+
+        // Mengecek tipe data dari input
+        searchIndex = (inputMenu == '1' || inputMenu == '4')
+                          ? binarySearch(penduduk, 0, jml - 1, inputInt, searchCode)
+                          : binarySearch(penduduk, 0, jml - 1, inputStr, searchCode);
+        break;
+      }
+
+      default:
+        isRepeatSort = 0;
+        break;
+      }
+
+      // Menampilkan Data
+      if (isRepeatSort)
+      {
+        cout << "[Pencarian Penduduk Berdasarkan " + strSearchBy + "] \n"
+             << "Metode Pencarian: " << strSearchMethod << "\n\n";
+        // << "Kata Kunci: " <<
+
+        if (searchIndex != -1)
+          cetakPenduduk(penduduk, searchIndex + 1, searchIndex);
+        else
+          cout << "Data Tidak ditemukan. \n\n";
+
+        pressAnyKey();
+      }
+    }
+    break;
+
+    default:
+      isRepeatMenu = 0;
+      break;
+    }
+  } while (isRepeatMenu);
+}
+
+void sortPenduduk(Penduduk penduduk[], int jml)
 {
   Penduduk sortedPenduduk[100];
   int sortedCode;
@@ -291,11 +435,105 @@ void sortingPenduduk(Penduduk penduduk[], int jml)
   } while (!isRepeatMenu);
 }
 
+int seqSearch(Penduduk penduduk[], int jml, int input, int searchCode)
+{
+  if (searchCode == 4)
+  {
+    for (int i = 0; i < jml; i++)
+      if (input == penduduk[i].status)
+        return i;
+  }
+  else
+    for (int i = 0; i < jml; i++)
+      if (input == penduduk[i].noKtp)
+        return i;
+
+  return -1;
+}
+
+int seqSearch(Penduduk penduduk[], int jml, string input, int searchCode)
+{
+  if (searchCode == 3)
+  {
+    for (int i = 0; i < jml; i++)
+      if (input == penduduk[i].golDar)
+        return i;
+  }
+  else
+    for (int i = 0; i < jml; i++)
+      if (input == penduduk[i].nama)
+        return i;
+
+  return -1;
+}
+
+int binarySearch(Penduduk penduduk[], int awal, int akhir, int input, int searchCode)
+{
+  int tengah = (awal + akhir) / 2;
+
+  if (awal <= akhir)
+  {
+    if (searchCode == 4)
+    {
+      /* Jika index awal <= index akhir, maka lakukan pencarian,
+         jika tidak maka pencarian tidak ditemukan. */
+
+      /* - Jika input = nilai tengah, maka fungsi mengembalikan nilai tengah.
+         - Jika input berada di sisi kiri nilai tengah,
+           maka lakukan pemanggilan fungsi lagi (rekursif) dengan nilai tengah-1 sebagai parameter akhir
+         - Jika input berada di sisi kanan nilai tengah,
+           maka lakukan pemanggilan fungsi lagi (rekursif) dengan nilai tengah+1 sebagai parameter awal
+      */
+      return (input == penduduk[tengah].status) ? tengah
+             : (input < penduduk[tengah].status)
+                 ? binarySearch(penduduk, awal, tengah - 1, input, searchCode)
+                 : binarySearch(penduduk, tengah + 1, akhir, input, searchCode);
+    }
+
+    else
+    {
+      return (input == penduduk[tengah].noKtp) ? tengah
+             : (input < penduduk[tengah].noKtp)
+                 ? binarySearch(penduduk, awal, tengah - 1, input, searchCode)
+                 : binarySearch(penduduk, tengah + 1, akhir, input, searchCode);
+    }
+  }
+
+  return -1;
+}
+
+int binarySearch(Penduduk penduduk[], int awal, int akhir, string input, int searchCode)
+{
+  int tengah = (awal + akhir) / 2;
+
+  if (awal <= akhir)
+  {
+    if (searchCode == 3)
+    {
+      return (input == penduduk[tengah].golDar) ? tengah
+             : (input < penduduk[tengah].golDar)
+                 ? binarySearch(penduduk, awal, tengah - 1, input, searchCode)
+                 : binarySearch(penduduk, tengah + 1, akhir, input, searchCode);
+    }
+
+    else
+    {
+      return (input == penduduk[tengah].nama) ? tengah
+             : (input < penduduk[tengah].nama)
+                 ? binarySearch(penduduk, awal, tengah - 1, input, searchCode)
+                 : binarySearch(penduduk, tengah + 1, akhir, input, searchCode);
+    }
+  }
+
+  return -1;
+}
+
 void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
 {
   Penduduk tempStruct;
   int i, j;
 
+  // Sort by Nama
   if (sortedCode == 2)
   {
     for (i = 0; i < jml - 1; i++)
@@ -313,6 +551,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
     }
   }
 
+  // Sort by Goldar
   else if (sortedCode == 3)
   {
     for (i = 0; i < jml - 1; i++)
@@ -321,7 +560,6 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
       {
         if (penduduk[j].golDar > penduduk[j + 1].golDar)
         {
-          // Menukar elemen
           tempStruct = penduduk[j];
           penduduk[j] = penduduk[j + 1];
           penduduk[j + 1] = tempStruct;
@@ -330,6 +568,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
     }
   }
 
+  // Sort by Status
   else if (sortedCode == 4)
   {
     for (i = 0; i < jml - 1; i++)
@@ -338,7 +577,6 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
       {
         if (penduduk[j].status > penduduk[j + 1].status)
         {
-          // Menukar elemen
           tempStruct = penduduk[j];
           penduduk[j] = penduduk[j + 1];
           penduduk[j + 1] = tempStruct;
@@ -347,6 +585,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
     }
   }
 
+  // Sort by No. KTP
   else
   {
     for (i = 0; i < jml - 1; i++)
@@ -355,7 +594,6 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
       {
         if (penduduk[j].noKtp > penduduk[j + 1].noKtp)
         {
-          // Menukar elemen
           tempStruct = penduduk[j];
           penduduk[j] = penduduk[j + 1];
           penduduk[j + 1] = tempStruct;
@@ -439,6 +677,7 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
   int i, j;
   Penduduk key;
 
+  // Sort by Nama
   if (sortedCode == 2)
   {
     for (i = 0; i < jml; i++)
@@ -458,6 +697,7 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
     }
   }
 
+  // Sort by Goldar
   else if (sortedCode == 3)
   {
     for (i = 0; i < jml; i++)
@@ -465,9 +705,6 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
       key = penduduk[i];
       j = i - 1;
 
-      /* Bandingkan key sama elemen di kirinya. Kalo key lebih kecil,
-         tuker sampe key lebih besar dari elemen di kirinya
-         atau mentok paling ujung kiri */
       while (penduduk[j].golDar > key.golDar && j >= 0)
       {
         penduduk[j + 1] = penduduk[j];
@@ -477,6 +714,7 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
     }
   }
 
+  // Sort by Status
   else if (sortedCode == 4)
   {
     for (i = 0; i < jml; i++)
@@ -484,9 +722,6 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
       key = penduduk[i];
       j = i - 1;
 
-      /* Bandingkan key sama elemen di kirinya. Kalo key lebih kecil,
-         tuker sampe key lebih besar dari elemen di kirinya
-         atau mentok paling ujung kiri */
       while (penduduk[j].status > key.status && j >= 0)
       {
         penduduk[j + 1] = penduduk[j];
@@ -496,6 +731,7 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
     }
   }
 
+  // Sort by No. KTP
   else
   {
     for (i = 0; i < jml; i++)
@@ -503,9 +739,6 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
       key = penduduk[i];
       j = i - 1;
 
-      /* Bandingkan key sama elemen di kirinya. Kalo key lebih kecil,
-         tuker sampe key lebih besar dari elemen di kirinya
-         atau mentok paling ujung kiri */
       while (penduduk[j].noKtp > key.noKtp && j >= 0)
       {
         penduduk[j + 1] = penduduk[j];

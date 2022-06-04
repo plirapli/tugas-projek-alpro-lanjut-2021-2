@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <conio.h>
+#include <iomanip>
 
 #define CLEAR "cls"
 
@@ -47,6 +48,7 @@ string replaceHyphen(string str);
 string statusCode(int kode);
 void statusCode();
 void showFileName();
+void Garis(int length);
 void pressAnyKey();
 
 string fileName = "data-penduduk";
@@ -153,8 +155,6 @@ void readFile(Penduduk penduduk[], int &jml)
     jml += i - 1;
     myFile.close();
   }
-  else
-    cout << "Gagal membuka file. \n";
 }
 
 void writeFile(Penduduk penduduk[], int jml, string namaFile)
@@ -212,20 +212,38 @@ void addPenduduk(Penduduk penduduk[], int jml)
 
 void cetakPenduduk(Penduduk penduduk[], int jml, int awal)
 {
+  int jmlGaris = 79;
+
+  cout << "[Informasi Penduduk] \n";
+  Garis(jmlGaris);
+  cout << left
+       << "| " << setw(17) << "NIK"
+       << "| " << setw(25) << "Nama"
+       << "| " << setw(11) << "Gol. Darah"
+       << "| " << setw(19) << "Status"
+       << "| \n";
+  Garis(jmlGaris);
+
   if (jml > 0)
   {
-    cout << "[Informasi Penduduk] \n";
-    for (int i = awal; i < jml; i++)
+    for (int i = 0; i < jml; i++)
     {
-      cout << "Penduduk ke-" << i + 1 << "\n"
-           << "NIK: " << penduduk[i].noKtp << "\n"
-           << "Nama: " << penduduk[i].nama << "\n"
-           << "Gol. Darah: " << penduduk[i].golDar << "\n"
-           << "Status: " << statusCode(penduduk[i].status) << "\n\n";
+      cout << left
+           << "| " << setw(17) << penduduk[i].noKtp
+           << "| " << setw(25) << penduduk[i].nama
+           << "| " << setw(11) << penduduk[i].golDar
+           << "| " << setw(19) << statusCode(penduduk[i].status);
+      cout << "| \n";
     }
   }
   else
-    cout << "Penduduk masih kosong! \n\n";
+  {
+    cout << left << "| " << setw(78) << "Penduduk masih kosong!";
+    cout << "| \n";
+  }
+
+  Garis(jmlGaris);
+  cout << "\n";
 }
 
 void searchPenduduk(Penduduk penduduk[], int jml)
@@ -1094,6 +1112,14 @@ void statusCode()
 void showFileName()
 {
   cout << "FILE: " + fileName + ".txt \n\n";
+}
+
+void Garis(int length)
+{
+  cout << "+";
+  for (int i = 0; i < length; i++)
+    cout << "-";
+  cout << "+ \n";
 }
 
 void pressAnyKey()

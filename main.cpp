@@ -13,15 +13,15 @@ struct Penduduk
 };
 
 // R/W Files
-void readFile(Penduduk penduduk[], int &jml, string fileName);
-void writeFile(Penduduk penduduk[], int jml, string fileName);
+void readFile(Penduduk penduduk[], int &jml);
+void writeFile(Penduduk penduduk[], int jml, string namaFile);
 
 // Main Menu
-void addPenduduk(Penduduk penduduk[], int jml, string fileName);
+void addPenduduk(Penduduk penduduk[], int jml);
 void cetakPenduduk(Penduduk penduduk[], int jml, int awal = 0);
 void searchPenduduk(Penduduk penduduk[], int jml);
 void sortPenduduk(Penduduk penduduk[], int jml);
-void transaksiPenduduk(Penduduk penduduk[], int jml, string fileName);
+void transaksiPenduduk(Penduduk penduduk[], int jml);
 
 // Search Method
 int seqSearch(Penduduk penduduk[], int jml, int input, int searchCode);
@@ -37,6 +37,7 @@ void shellSort(Penduduk penduduk[], int jml, int sortedCode);
 
 // Transaction Menu
 void updatePenduduk(Penduduk penduduk[], int index, int jml);
+void splitPenduduk(Penduduk penduduk[], int jml);
 
 // Sting Manipulation
 string replaceSpasi(string str);
@@ -47,21 +48,21 @@ string statusCode(int kode);
 void statusCode();
 void pressAnyKey();
 
+string fileName = "data-penduduk";
+
 int main()
 {
   Penduduk penduduk[100];
   int jmlPenduduk = 0;
   bool isExit, repeatMainMenu;
   char inputMenu;
-  string fileName = "data-penduduk";
 
+  system(CLEAR);
   do
   {
-    system(CLEAR);
     repeatMainMenu = 1;
 
     cout << "[FILE DATA PENDUDUK] \n"
-         << "File saat ini: " << fileName << ".txt \n"
          << "Masukkan Nama File (tanpa .txt): ";
     cin >> fileName;
     system(CLEAR);
@@ -69,9 +70,10 @@ int main()
     while (repeatMainMenu)
     {
       // Membaca file
-      readFile(penduduk, jmlPenduduk, fileName);
+      readFile(penduduk, jmlPenduduk);
 
-      cout << "[TUGAS PROJEK ALGO 2022] \n"
+      cout << "FILE: " + fileName + ".txt \n\n"
+           << "[TUGAS PROJEK ALGO 2022] \n"
            << "[1] Input Data \n"
            << "[2] Tampilkan Data \n"
            << "[3] Searching Data \n"
@@ -87,11 +89,12 @@ int main()
       {
       case '1':
         system(CLEAR);
-        addPenduduk(penduduk, jmlPenduduk, fileName);
+        addPenduduk(penduduk, jmlPenduduk);
         break;
 
       case '2':
         system(CLEAR);
+        cout << "FILE: " + fileName + ".txt \n\n";
         cetakPenduduk(penduduk, jmlPenduduk);
         pressAnyKey();
         break;
@@ -108,11 +111,12 @@ int main()
 
       case '5':
         system(CLEAR);
-        transaksiPenduduk(penduduk, jmlPenduduk, fileName);
+        transaksiPenduduk(penduduk, jmlPenduduk);
         break;
 
       case '6':
         repeatMainMenu = 0;
+        cout << "File saat ini: " << fileName << ".txt \n\n";
         break;
 
       default:
@@ -127,7 +131,7 @@ int main()
   return 0;
 }
 
-void readFile(Penduduk penduduk[], int &jml, string fileName)
+void readFile(Penduduk penduduk[], int &jml)
 {
   string nameOfFile = fileName + ".txt";
 
@@ -152,10 +156,10 @@ void readFile(Penduduk penduduk[], int &jml, string fileName)
     cout << "Gagal membuka file. \n";
 }
 
-void writeFile(Penduduk penduduk[], int jml, string fileName)
+void writeFile(Penduduk penduduk[], int jml, string namaFile)
 {
   int i;
-  string nameOfFile = fileName + ".txt";
+  string nameOfFile = namaFile + ".txt";
 
   for (i = 0; i < jml; i++)
     penduduk[i].nama = replaceSpasi(penduduk[i].nama);
@@ -179,9 +183,10 @@ void writeFile(Penduduk penduduk[], int jml, string fileName)
     cout << "Gagal membuka file. \n";
 }
 
-void addPenduduk(Penduduk penduduk[], int jml, string fileName)
+void addPenduduk(Penduduk penduduk[], int jml)
 {
-  cout << "Tambah Penduduk \n";
+  cout << "FILE: " + fileName + ".txt \n\n"
+       << "[TAMBAH PENDUDUK] \n";
   cout << "Nomor KTP: ";
   cin >> penduduk[jml].noKtp;
 
@@ -231,7 +236,8 @@ void searchPenduduk(Penduduk penduduk[], int jml)
 
   do
   {
-    cout << "[PENCARIAN DATA PENDUDUK] \n"
+    cout << "FILE: " + fileName + ".txt \n\n"
+         << "[PENCARIAN DATA PENDUDUK] \n"
          << "[1] NIK \n"
          << "[2] Nama \n"
          << "[3] Gol. Darah \n"
@@ -282,7 +288,7 @@ void searchPenduduk(Penduduk penduduk[], int jml)
            << "[...] Kembali \n"
            << "Pilih > ";
       cin >> inputMethod;
-      system(CLEAR);
+      cout << "\n";
 
       if (isRepeatMenu)
       {
@@ -300,6 +306,7 @@ void searchPenduduk(Penduduk penduduk[], int jml)
         }
         cout << "\n";
       }
+      system(CLEAR);
 
       switch (inputMethod)
       {
@@ -371,7 +378,8 @@ void sortPenduduk(Penduduk penduduk[], int jml)
 
   do
   {
-    cout << "[PENGURUTAN DATA PENDUDUK] \n"
+    cout << "FILE: " + fileName + ".txt \n\n"
+         << "[PENGURUTAN DATA PENDUDUK] \n"
          << "[1] NIK \n"
          << "[2] Nama \n"
          << "[3] Gol. Darah \n"
@@ -472,14 +480,15 @@ void sortPenduduk(Penduduk penduduk[], int jml)
   } while (isRepeatMenu);
 }
 
-void transaksiPenduduk(Penduduk penduduk[], int jml, string fileName)
+void transaksiPenduduk(Penduduk penduduk[], int jml)
 {
   bool isRepeatMenu = 1;
   char inputMenu;
 
   do
   {
-    cout << "[TRANSAKSI PENDUDUK] \n"
+    cout << "FILE: " + fileName + ".txt \n\n"
+         << "[TRANSAKSI PENDUDUK] \n"
          << "[1] Updating \n"
          << "[2] Splitting \n"
          << "[...] Kembali \n"
@@ -513,11 +522,14 @@ void transaksiPenduduk(Penduduk penduduk[], int jml, string fileName)
       break;
     }
 
+    case '2':
+      splitPenduduk(penduduk, jml);
+      break;
+
     default:
       isRepeatMenu = 0;
       break;
     }
-
   } while (isRepeatMenu);
 }
 
@@ -992,6 +1004,46 @@ void updatePenduduk(Penduduk penduduk[], int index, int jml)
       pressAnyKey();
     }
   } while (isRepeat);
+}
+
+void splitPenduduk(Penduduk penduduk[], int jml)
+{
+  Penduduk firstSplit[100], secondSplit[100];
+  int j = 0, k = 0;
+  int jmlPertama = jml / 2, jmlKedua = jml - jmlPertama;
+  string inputFileName1, inputFileName2;
+
+  for (int i = 0; i < jml; i++)
+  {
+    if (i < jml / 2)
+    {
+      firstSplit[j] = penduduk[i];
+      j++;
+    }
+    else
+    {
+      secondSplit[k] = penduduk[i];
+      k++;
+    }
+  }
+
+  cout << "[SPLITTING] \n"
+       << "FILE: " + fileName + ".txt \n\n";
+  cetakPenduduk(penduduk, jml);
+
+  cout << "Masukkan Nama File ke-1 (.txt) > ";
+  cin >> inputFileName1;
+  cout << "Masukkan Nama File ke-2 (.txt) > ";
+  cin >> inputFileName2;
+  cout << "\n";
+
+  writeFile(firstSplit, jmlPertama, inputFileName1);
+  writeFile(secondSplit, jmlKedua, inputFileName2);
+
+  cout << "File " + fileName + ".txt berhasil dipecah menjadi: \n"
+       << "File ke-1: " + inputFileName1 + ".txt \n"
+       << "File ke-2: " + inputFileName2 + ".txt \n\n";
+  pressAnyKey();
 }
 
 string replaceSpasi(string str)

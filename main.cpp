@@ -909,6 +909,7 @@ void shellSort(Penduduk penduduk[], int jml, int sortedCode)
     // Start with a big gap, then reduce the gap
     for (int gap = jml / 2; gap > 0; gap /= 2)
     {
+
       // Do a gapped insertion sort for this gap size.
       // The first gap elements a[0..gap-1] are already in gapped order
       // keep adding one more element until the entire array is
@@ -918,10 +919,12 @@ void shellSort(Penduduk penduduk[], int jml, int sortedCode)
         // add a[i] to the elements that have been gap sorted
         // save a[i] in temp and make a hole at position i
         Penduduk temp = penduduk[i];
+        int j;
+
+        cetakField(penduduk, jml, 2);
 
         // shift earlier gap-sorted elements up until the correct
         // location for a[i] is found
-        int j;
         for (j = i; j >= gap && penduduk[j - gap].nama > temp.nama; j -= gap)
           penduduk[j] = penduduk[j - gap];
 
@@ -929,6 +932,7 @@ void shellSort(Penduduk penduduk[], int jml, int sortedCode)
         penduduk[j] = temp;
       }
     }
+    cetakField(penduduk, jml, 2);
   }
 
   else if (sortedCode == 3)
@@ -940,11 +944,13 @@ void shellSort(Penduduk penduduk[], int jml, int sortedCode)
         Penduduk temp = penduduk[i];
         int j;
 
+        cetakField(penduduk, jml, 3);
         for (j = i; j >= gap && penduduk[j - gap].golDar > temp.golDar; j -= gap)
           penduduk[j] = penduduk[j - gap];
         penduduk[j] = temp;
       }
     }
+    cetakField(penduduk, jml, 3);
   }
 
   else if (sortedCode == 4)
@@ -956,11 +962,13 @@ void shellSort(Penduduk penduduk[], int jml, int sortedCode)
         Penduduk temp = penduduk[i];
         int j;
 
+        cetakField(penduduk, jml, 4);
         for (j = i; j >= gap && penduduk[j - gap].status > temp.status; j -= gap)
           penduduk[j] = penduduk[j - gap];
         penduduk[j] = temp;
       }
     }
+    cetakField(penduduk, jml, 4);
   }
 
   else
@@ -972,11 +980,13 @@ void shellSort(Penduduk penduduk[], int jml, int sortedCode)
         Penduduk temp = penduduk[i];
         int j;
 
+        cetakField(penduduk, jml, 1);
         for (j = i; j >= gap && penduduk[j - gap].noKtp > temp.noKtp; j -= gap)
           penduduk[j] = penduduk[j - gap];
         penduduk[j] = temp;
       }
     }
+    cetakField(penduduk, jml, 1);
   }
 }
 

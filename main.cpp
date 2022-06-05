@@ -131,7 +131,8 @@ int main()
     }
   } while (!isExit);
 
-  cout << "Terima kasih.";
+  cout << "Terima kasih. \n\n";
+  pressAnyKey();
   return 0;
 }
 
@@ -710,7 +711,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
     cetakField(penduduk, jml, 4);
   }
 
-  // Sort by No. KTP
+  // Sort by NIK
   else
   {
     for (i = 0; i < jml - 1; i++)
@@ -735,6 +736,7 @@ void selectionSort(Penduduk penduduk[], int jml, int sortedCode)
   Penduduk tempStruct;
   int i, j, min_idx;
 
+  // Sort by Nama
   if (sortedCode == 2)
   {
     // One by one move boundary of unsorted subarray
@@ -755,6 +757,7 @@ void selectionSort(Penduduk penduduk[], int jml, int sortedCode)
     cetakField(penduduk, jml, 2);
   }
 
+  // Sort by Gol. Darah
   else if (sortedCode == 3)
   {
     for (i = 0; i < jml - 1; i++)
@@ -772,6 +775,7 @@ void selectionSort(Penduduk penduduk[], int jml, int sortedCode)
     cetakField(penduduk, jml, 3);
   }
 
+  // Sort by Status
   else if (sortedCode == 4)
   {
     for (i = 0; i < jml - 1; i++)
@@ -789,6 +793,7 @@ void selectionSort(Penduduk penduduk[], int jml, int sortedCode)
     cetakField(penduduk, jml, 4);
   }
 
+  // Sort by NIK
   else
   {
     for (i = 0; i < jml - 1; i++)
@@ -823,15 +828,20 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
       /* Bandingkan key sama elemen di kirinya. Kalo key lebih kecil,
          tuker sampe key lebih besar dari elemen di kirinya
          atau mentok paling ujung kiri */
-      while (penduduk[j].nama > key.nama && j >= 0)
+      while (j >= 0)
       {
-        cetakField(penduduk, jml, 1);
+        if (key.nama < penduduk[j].nama)
+        {
+          cetakField(penduduk, jml, 2);
 
-        // Menukar elemen
-        tempStruct = penduduk[j + 1];
-        penduduk[j + 1] = penduduk[j];
-        penduduk[j] = tempStruct;
-        j--;
+          // Menukar elemen
+          tempStruct = penduduk[j + 1];
+          penduduk[j + 1] = penduduk[j];
+          penduduk[j] = tempStruct;
+          j--;
+        }
+        else
+          break;
       }
       penduduk[j + 1] = key;
     }
@@ -846,13 +856,18 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
       key = penduduk[i];
       j = i - 1;
 
-      while (penduduk[j].golDar > key.golDar && j >= 0)
+      while (j >= 0)
       {
-        cetakField(penduduk, jml, 3);
-        tempStruct = penduduk[j + 1];
-        penduduk[j + 1] = penduduk[j];
-        penduduk[j] = tempStruct;
-        j--;
+        if (key.golDar < penduduk[j].golDar)
+        {
+          cetakField(penduduk, jml, 3);
+          tempStruct = penduduk[j + 1];
+          penduduk[j + 1] = penduduk[j];
+          penduduk[j] = tempStruct;
+          j--;
+        }
+        else
+          break;
       }
       penduduk[j + 1] = key;
     }
@@ -904,6 +919,7 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
 
 void shellSort(Penduduk penduduk[], int jml, int sortedCode)
 {
+  // Sort by Nama
   if (sortedCode == 2)
   {
     // Start with a big gap, then reduce the gap
@@ -935,6 +951,7 @@ void shellSort(Penduduk penduduk[], int jml, int sortedCode)
     cetakField(penduduk, jml, 2);
   }
 
+  // Sort by Gol. Darah
   else if (sortedCode == 3)
   {
     for (int gap = jml / 2; gap > 0; gap /= 2)
@@ -953,6 +970,7 @@ void shellSort(Penduduk penduduk[], int jml, int sortedCode)
     cetakField(penduduk, jml, 3);
   }
 
+  // Sort by Status
   else if (sortedCode == 4)
   {
     for (int gap = jml / 2; gap > 0; gap /= 2)
@@ -971,6 +989,7 @@ void shellSort(Penduduk penduduk[], int jml, int sortedCode)
     cetakField(penduduk, jml, 4);
   }
 
+  // Sort by NIK
   else
   {
     for (int gap = jml / 2; gap > 0; gap /= 2)

@@ -476,7 +476,7 @@ void sortPenduduk(Penduduk penduduk[], int jml)
           break;
 
         default:
-          isRepeatSort = 1;
+          isRepeatSort = 0;
           break;
         }
 
@@ -746,11 +746,13 @@ void selectionSort(Penduduk penduduk[], int jml, int sortedCode)
         if (penduduk[j].nama < penduduk[min_idx].nama)
           min_idx = j;
 
+      cetakField(penduduk, jml, 2);
       // Menukar elemen
       tempStruct = penduduk[i];
       penduduk[i] = penduduk[min_idx];
       penduduk[min_idx] = tempStruct;
     }
+    cetakField(penduduk, jml, 2);
   }
 
   else if (sortedCode == 3)
@@ -762,10 +764,12 @@ void selectionSort(Penduduk penduduk[], int jml, int sortedCode)
         if (penduduk[j].golDar < penduduk[min_idx].golDar)
           min_idx = j;
 
+      cetakField(penduduk, jml, 3);
       tempStruct = penduduk[i];
       penduduk[i] = penduduk[min_idx];
       penduduk[min_idx] = tempStruct;
     }
+    cetakField(penduduk, jml, 3);
   }
 
   else if (sortedCode == 4)
@@ -777,10 +781,12 @@ void selectionSort(Penduduk penduduk[], int jml, int sortedCode)
         if (penduduk[j].status < penduduk[min_idx].status)
           min_idx = j;
 
+      cetakField(penduduk, jml, 4);
       tempStruct = penduduk[i];
       penduduk[i] = penduduk[min_idx];
       penduduk[min_idx] = tempStruct;
     }
+    cetakField(penduduk, jml, 4);
   }
 
   else
@@ -792,10 +798,12 @@ void selectionSort(Penduduk penduduk[], int jml, int sortedCode)
         if (penduduk[j].noKtp < penduduk[min_idx].noKtp)
           min_idx = j;
 
+      cetakField(penduduk, jml, 1);
       tempStruct = penduduk[i];
       penduduk[i] = penduduk[min_idx];
       penduduk[min_idx] = tempStruct;
     }
+    cetakField(penduduk, jml, 1);
   }
 }
 

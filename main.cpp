@@ -809,8 +809,8 @@ void selectionSort(Penduduk penduduk[], int jml, int sortedCode)
 
 void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
 {
+  Penduduk key, tempStruct;
   int i, j;
-  Penduduk key;
 
   // Sort by Nama
   if (sortedCode == 2)
@@ -825,11 +825,17 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
          atau mentok paling ujung kiri */
       while (penduduk[j].nama > key.nama && j >= 0)
       {
+        cetakField(penduduk, jml, 1);
+
+        // Menukar elemen
+        tempStruct = penduduk[j + 1];
         penduduk[j + 1] = penduduk[j];
+        penduduk[j] = tempStruct;
         j--;
       }
       penduduk[j + 1] = key;
     }
+    cetakField(penduduk, jml, 2);
   }
 
   // Sort by Goldar
@@ -842,11 +848,15 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
 
       while (penduduk[j].golDar > key.golDar && j >= 0)
       {
+        cetakField(penduduk, jml, 3);
+        tempStruct = penduduk[j + 1];
         penduduk[j + 1] = penduduk[j];
+        penduduk[j] = tempStruct;
         j--;
       }
       penduduk[j + 1] = key;
     }
+    cetakField(penduduk, jml, 3);
   }
 
   // Sort by Status
@@ -859,11 +869,15 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
 
       while (penduduk[j].status > key.status && j >= 0)
       {
+        cetakField(penduduk, jml, 4);
+        tempStruct = penduduk[j + 1];
         penduduk[j + 1] = penduduk[j];
+        penduduk[j] = tempStruct;
         j--;
       }
       penduduk[j + 1] = key;
     }
+    cetakField(penduduk, jml, 4);
   }
 
   // Sort by No. KTP
@@ -876,11 +890,15 @@ void insertionSort(Penduduk penduduk[], int jml, int sortedCode)
 
       while (penduduk[j].noKtp > key.noKtp && j >= 0)
       {
+        cetakField(penduduk, jml, 1);
+        tempStruct = penduduk[j + 1];
         penduduk[j + 1] = penduduk[j];
+        penduduk[j] = tempStruct;
         j--;
       }
       penduduk[j + 1] = key;
     }
+    cetakField(penduduk, jml, 1);
   }
 }
 

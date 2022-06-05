@@ -71,6 +71,7 @@ int main()
     cin >> fileName;
     system(CLEAR);
 
+    // MAIN MENU
     while (repeatMainMenu)
     {
       // Membaca file
@@ -393,10 +394,6 @@ void sortPenduduk(Penduduk penduduk[], int jml)
   char inputMenu, inputSort;
   string strSortedBy, sortMethod;
 
-  // Copy Data
-  for (int i = 0; i < jml; i++)
-    sortedPenduduk[i] = penduduk[i];
-
   do
   {
     showFileName();
@@ -444,6 +441,10 @@ void sortPenduduk(Penduduk penduduk[], int jml)
 
       do
       {
+        // Copy Data
+        for (int i = 0; i < jml; i++)
+          sortedPenduduk[i] = penduduk[i];
+
         cout << "[Pengurutan Data Penduduk Berdasarkan " + strSortedBy + "] \n"
              << "[1] Bubble Sort \n"
              << "[2] Selection Sort \n"
@@ -453,6 +454,7 @@ void sortPenduduk(Penduduk penduduk[], int jml)
              << "Pilih > ";
         cin >> inputSort;
         system(CLEAR);
+        cout << "[PROSES SORTING] \n";
 
         switch (inputSort)
         {

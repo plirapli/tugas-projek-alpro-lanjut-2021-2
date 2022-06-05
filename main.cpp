@@ -45,6 +45,7 @@ string replaceSpasi(string str);
 string replaceHyphen(string str);
 
 // Misc
+void cetakField(Penduduk penduduk[], int jml, int fieldCode);
 string statusCode(int kode);
 void statusCode();
 void showFileName();
@@ -481,6 +482,7 @@ void sortPenduduk(Penduduk penduduk[], int jml)
 
         if (isRepeatSort)
         {
+          cout << "\n";
           cout << "[Pengurutan Data Penduduk Berdasarkan " + strSortedBy + "] \n"
                << "Metode: " << sortMethod << "\n\n";
 
@@ -657,6 +659,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
     {
       for (j = 0; j < jml - i - 1; j++)
       {
+        cetakField(penduduk, jml, 2);
         if (penduduk[j].nama > penduduk[j + 1].nama)
         {
           // Menukar elemen
@@ -666,6 +669,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
         }
       }
     }
+    cetakField(penduduk, jml, 2);
   }
 
   // Sort by Goldar
@@ -675,6 +679,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
     {
       for (j = 0; j < jml - i - 1; j++)
       {
+        cetakField(penduduk, jml, 3);
         if (penduduk[j].golDar > penduduk[j + 1].golDar)
         {
           tempStruct = penduduk[j];
@@ -683,6 +688,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
         }
       }
     }
+    cetakField(penduduk, jml, 3);
   }
 
   // Sort by Status
@@ -692,6 +698,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
     {
       for (j = 0; j < jml - i - 1; j++)
       {
+        cetakField(penduduk, jml, 4);
         if (penduduk[j].status > penduduk[j + 1].status)
         {
           tempStruct = penduduk[j];
@@ -700,6 +707,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
         }
       }
     }
+    cetakField(penduduk, jml, 4);
   }
 
   // Sort by No. KTP
@@ -709,6 +717,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
     {
       for (j = 0; j < jml - i - 1; j++)
       {
+        cetakField(penduduk, jml, 1);
         if (penduduk[j].noKtp > penduduk[j + 1].noKtp)
         {
           tempStruct = penduduk[j];
@@ -717,6 +726,7 @@ void bubbleSort(Penduduk penduduk[], int jml, int sortedCode)
         }
       }
     }
+    cetakField(penduduk, jml, 1);
   }
 }
 
@@ -1082,6 +1092,46 @@ string replaceHyphen(string str)
       str[i] = ' ';
 
   return str;
+}
+
+void cetakField(Penduduk penduduk[], int jml, int fieldCode)
+{
+  if (fieldCode == 1)
+  {
+    for (int i = 0; i < jml; i++)
+    {
+      cout << penduduk[i].noKtp;
+      cout << (i < jml - 1 ? ", " : "");
+    }
+  }
+
+  else if (fieldCode == 2)
+  {
+    for (int i = 0; i < jml; i++)
+    {
+      cout << penduduk[i].nama;
+      cout << (i < jml - 1 ? ", " : "");
+    }
+  }
+
+  else if (fieldCode == 3)
+  {
+    for (int i = 0; i < jml; i++)
+    {
+      cout << penduduk[i].golDar;
+      cout << (i < jml - 1 ? ", " : "");
+    }
+  }
+
+  else
+  {
+    for (int i = 0; i < jml; i++)
+    {
+      cout << statusCode(penduduk[i].status);
+      cout << (i < jml - 1 ? ", " : "");
+    }
+  }
+  cout << "\n";
 }
 
 string statusCode(int kode)
